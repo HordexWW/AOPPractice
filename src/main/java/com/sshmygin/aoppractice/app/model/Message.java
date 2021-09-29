@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Message {
-    private long id;
-    private String senderName;
+    private Long id;
+    private Sender sender;
     private String content;
 
-    public Message(String senderName, String content) {
-        this.senderName = senderName;
+    public Message(Sender sender, String content) {
+        this.sender = sender;
         this.content = content;
     }
 }
