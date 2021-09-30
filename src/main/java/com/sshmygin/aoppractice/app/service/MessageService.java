@@ -26,4 +26,8 @@ public class MessageService {
     public void addMessage(Message message){
         messageRepository.addMessage(message);
     }
+
+    public void throwException() {
+        throw new IllegalStateException("Test @AfterThrowing advice");
+    }
 }

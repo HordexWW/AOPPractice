@@ -30,4 +30,9 @@ public class MessageController {
     public void postMessage(@RequestBody Message message) {
         messageService.addMessage(message);
     }
+
+    @GetMapping("/error")
+    public void throwTestException() {
+        messageService.throwException();
+    }
 }
