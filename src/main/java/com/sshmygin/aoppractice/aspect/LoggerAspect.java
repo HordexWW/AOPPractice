@@ -4,6 +4,7 @@ import com.sshmygin.aoppractice.app.model.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -15,11 +16,13 @@ import org.springframework.stereotype.Component;
 public class LoggerAspect {
 
     @Pointcut("within(com.sshmygin.aoppractice.app..*)")
-    private void allClasses(){}
+    private void allClasses() {
+    }
 
     @Pointcut("execution(public void com.sshmygin.aoppractice.app.service.MessageService.addMessage(..)) &&" +
             "args(message)")
-    private void messageServiceAddMessageMethod(Message message) {}
+    private void messageServiceAddMessageMethod(Message message) {
+    }
 
     @Around("allClasses()")
     private Object logTimeExecutionForAllClasses(ProceedingJoinPoint joinPoint) {
@@ -40,4 +43,10 @@ public class LoggerAspect {
     public void logPostedMessage(Message message) {
         log.info("Message from {} has been posted. Content {}", message.getSender(), message.getContent());
     }
+
+    @AfterThrowing(value = "execution(public void com.sshmygin.aoppractice.app.service.MessageService.throwException())", throwing = "e")
+    public void logAfterThrowingExceptionIn(IllegalStateException e) {
+        log.error(e.getMessage());
+    }
+
 }

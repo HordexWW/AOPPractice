@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface SenderRepository {
     List<Sender> findAll();
+
     Sender findById(long id);
+
     void addSender(Sender sender);
 
 }

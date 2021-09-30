@@ -3,7 +3,9 @@ package com.sshmygin.aoppractice.aspect;
 import com.sshmygin.aoppractice.app.model.Message;
 import com.sshmygin.aoppractice.app.model.Sender;
 import com.sshmygin.aoppractice.app.repository.SenderRepository;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +24,8 @@ public class BanMessageSenderAspect {
 
     @Pointcut("execution(public void com.sshmygin.aoppractice.app.service.MessageService.addMessage(..)) &&" +
             "args(message)")
-    private void messageServiceAddMessageMethod(Message message) {}
+    private void messageServiceAddMessageMethod(Message message) {
+    }
 
     @Before(value = "messageServiceAddMessageMethod(message)", argNames = "message")
     public void doNotSendMessageFromBannedSender(Message message) {

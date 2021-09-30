@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class SenderRepositoryImpl implements SenderRepository{
+public class SenderRepositoryImpl implements SenderRepository {
 
     private List<Sender> senderList;
 

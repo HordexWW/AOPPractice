@@ -15,7 +15,7 @@ public class MessageService {
     @Autowired
     private final MessageRepository messageRepository;
 
-    public List<Message> getAllMessages(){
+    public List<Message> getAllMessages() {
         return messageRepository.findAll();
     }
 
@@ -23,7 +23,7 @@ public class MessageService {
         return messageRepository.findById(id);
     }
 
-    public void addMessage(Message message){
+    public void addMessage(Message message) {
         messageRepository.addMessage(message);
     }
 
