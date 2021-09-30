@@ -1,7 +1,9 @@
 package com.sshmygin.aoppractice.aspect;
 
+import com.sshmygin.aoppractice.app.model.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -14,6 +16,10 @@ public class LoggerAspect {
 
     @Pointcut("within(com.sshmygin.aoppractice.app..*)")
     private void allClasses(){}
+
+    @Pointcut("execution(public void com.sshmygin.aoppractice.app.service.MessageService.addMessage(..)) &&" +
+            "args(message)")
+    private void messageServiceAddMessageMethod(Message message) {}
 
     @Around("allClasses()")
     private Object logTimeExecutionForAllClasses(ProceedingJoinPoint joinPoint) {
@@ -28,5 +34,10 @@ public class LoggerAspect {
         long executionTime = System.currentTimeMillis() - startTime;
         log.info("Execution of method {} in {} has took {}ms", joinPoint.getSignature().getName(), joinPoint.getThis(), executionTime);
         return proceed;
+    }
+
+    @AfterReturning(value = "messageServiceAddMessageMethod(message)", argNames = "message")
+    public void logPostedMessage(Message message) {
+        log.info("Message from {} has been posted. Content {}", message.getSender(), message.getContent());
     }
 }
