@@ -2,7 +2,9 @@ package com.sshmygin.aoppractice.aspect;
 
 import com.sshmygin.aoppractice.app.model.Message;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
@@ -49,4 +51,8 @@ public class LoggerAspect {
         log.error(e.getMessage());
     }
 
+    @After("allClasses()")
+    public void logAfterAdviceMessage(JoinPoint joinPoint) {
+        log.info("Message after {} execution",joinPoint.getSignature().toString());
+    }
 }
